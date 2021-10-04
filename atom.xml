@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>freedom</title>
+  
+  
+  <link href="http://example.com/atom.xml" rel="self"/>
+  
+  <link href="http://example.com/"/>
+  <updated>2021-10-03T13:09:43.686Z</updated>
+  <id>http://example.com/</id>
+  
+  <author>
+    <name>wizard</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>linux基于xray实现终端访问外网</title>
+    <link href="http://example.com/2021/10/03/%E7%BB%88%E7%AB%AF%E7%BF%BB%E5%A2%99/"/>
+    <id>http://example.com/2021/10/03/%E7%BB%88%E7%AB%AF%E7%BF%BB%E5%A2%99/</id>
+    <published>2021-10-03T12:28:36.041Z</published>
+    <updated>2021-10-03T13:09:43.686Z</updated>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="linux基于xray实现终端访问外网"><a href="#linux基于xray实现终端访问外网" class="headerlink" title="linux基于xray实现终端访问外网"></a>linux基于xray实现终端访问外网</h1><h2 id="下载xray"><a href="#下载xray" class="headerlink" title="下载xray"></a>下载xray</h2><p><a href="https://github.com/XTLS/Xray-core/releases">xray</a></p><p>选择对应 的版本下载</p><p>创建一个文件夹，将下载的xray放入文件中</p><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 解压 </span></span><br><span class="line">unzip xray-linux-64.zip  </span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 验证 </span></span><br><span class="line">./xray  --version </span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 创建配置文件夹 </span></span><br><span class="line">mkdir  /usr/local/share/xray</span><br><span class="line">mkdir /var/log/xray</span><br><span class="line">mkdir /usr/local/etc/xray</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 移动文件</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 服务文件</span></span><br><span class="line">chmod 777 xray.service  xray@.service </span><br><span class="line">mv xray.service  xray@.service  /etc/systemd/system</span><br><span class="line"></span><br><span class="line">mv geoip.dat geosite.dat /usr/local/share/xray</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 运行文件</span></span><br><span class="line">mv xray   /usr/local/bin </span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 配置文件  config.json （这是自己客户端的配置文件）</span></span><br><span class="line">cp config.json  /usr/local/etc/xray </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 运行 xray </span></span><br><span class="line">systemctl  restart xray </span><br><span class="line">systemctl enable xray </span><br></pre></td></tr></table></figure><p>配置完成后</p><h2 id="通过proxychains为linux终端程序提供代理工具"><a href="#通过proxychains为linux终端程序提供代理工具" class="headerlink" title="通过proxychains为linux终端程序提供代理工具"></a>通过proxychains为linux终端程序提供代理工具</h2><ul><li>介绍</li></ul><p>在Linux服务器上，有些工具自带支持代理(proxy)的功能，而一些没有，或者说只支持http代理，不支持socks5。我们可以使用proxychains为这些工具提供代理。</p><ul><li>安装(基于Ubuntu 21.04版本)</li></ul><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">apt install proxychains</span><br></pre></td></tr></table></figure><ul><li>配置</li></ul><p>文件默认位置<code>/etc/proxychains.conf</code></p><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">默认代理是shadowsocks</span><br><span class="line">vim /etc/proxychains.conf</span><br><span class="line">打开以后修改末尾</span><br><span class="line">[ProxyList]</span><br><span class="line"><span class="meta">#</span><span class="bash"> add proxy here ...</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> meanwile</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> defaults <span class="built_in">set</span> to <span class="string">&quot;tor&quot;</span></span></span><br><span class="line">socks5  127.0.0.1 xxxx</span><br><span class="line"></span><br></pre></td></tr></table></figure><ul><li>使用</li></ul><p>在需要访问资源的每个命令前面加上<code>proxychains</code>就行</p><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">proxychains ping https://www.gooogle.com</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot; cla</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>关于学习的一些自己的看法</title>
+    <link href="http://example.com/2020/11/24/%E5%85%B3%E4%BA%8E%E6%9C%80%E8%BF%91%E5%AD%A6%E4%B9%A0/"/>
+    <id>http://example.com/2020/11/24/%E5%85%B3%E4%BA%8E%E6%9C%80%E8%BF%91%E5%AD%A6%E4%B9%A0/</id>
+    <published>2020-11-24T04:20:49.000Z</published>
+    <updated>2020-11-24T04:36:35.019Z</updated>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>不知不觉已经过去半个学期了，回想着半个学期以来，学了点东西，又觉得没有学多少东西，很多东西就知道了一点表面的东西，原来一直不知道我的专业要学的东西有这么多，虽然原来也去招聘网站看，觉得也不是很多，可是后来自己深入了解后，原来要学的好多，虽然现在都大二了，其实我对自己想从事哪方面还没有清晰的认识，我其实也怕自己学偏了，最近也常看一些文章博客，但都不是技术类的，而是一些我觉得现在适合我的一些文章。</p><p>感觉最近看的比较多，所以需要消化一下，很多人都有不一样的观点，但核心的大多都一样，好多人都说编程这个东西就像一门手艺，需要师傅或者老师给你指点一下，觉得就有点像我看的一些玄幻小说，当你练功到一定的层次后，遇到瓶颈，去找你的师傅给你指点一下，然后去追求更高的层次，我觉得编程也是类似的，当你学完一个知识点，学完了，该咋用?掌握的到底咋样？是不是需要一些地方需要继续学习？有没有简单点的项目来加固一下我现在所学的东西？我觉得这就是我现在所遇到的问题，虽然我接触不到大佬，但是我的舍友还是不错的，有时候他们也会分享一些他们所了解的东西。</p><p>看了那么多的文章博客，我觉得大学其实学的就是一种适合自己的学习方法和适合自己的学习思维，慢慢摸索出适合自己的学习方法，比如看视频学习，还是看文档学习，那种效率高？那种更适合自己？还有其他的学习方式，可能在大学里，就是让我们慢慢摸索出属于自己的一个学习道路吧。</p><p>说了这么多，我来说说我最近学到的一些别人的学习方法，虽然我还没试过，但是觉得还是不错的，可能我们在网上去搜索如何学会java，c之类的，百度出来的大多数就是叫你报班，哈哈哈哈哈，<a href="https://imgchr.com/i/Dt0aKe"><img src="https://s3.ax1x.com/2020/11/24/Dt0aKe.jpg" alt="Dt0aKe.jpg"></a></p><p>如何学好这些语言，大都说到的编程，那如何学编程，网上千篇一律，多敲多做，不是说没有道理，我觉得这种还是比较空的，我觉得需要落地有实操的可能性的一种方法，学我们这种的，不能脱离课本，也不要找一些层次不高的人文章博客来学，他们的层次就限制了你的层次，所以最后找一些优秀的或者官方文档，我觉得最大的困惑最多的就是当我们学完一个知识点以后，该干点啥？？比如我当时学完C语言，感觉没啥用，因为根本没有用的到的地方，前几天，去参加一个比赛，最基础的东西都忘的差不多了，我慢慢发现，其实好多书后面都是一些项目的，我觉得这些就比较适合当我们学完一门语言后，拿来练手，比如我们学完了java，书后面可能就有拿java开发一个聊天系统，做个电商项目，我觉得这些是很重要的，我们需要一些东西来巩固我们所学的，以及我们在做项目时可能会遇到一些列问题，慢慢积累，最近都会变成我们的财富，网上教程一大把，但是一些实战的项目他们里面可能没有，我们一定不能脱离书本，善于寻找适合自己的方法。</p><p>我最近也有同学问我，他想学，但是不知道那些教程能好一点，有的是一些教育机构录的视屏，有的是一些大学老师录的视屏，不知道学那个，这个我其实也不是很懂，我连个菜鸟都算不上的弟弟，不能给别人说这说那的，但是我们可以从他们的出发点来看他们，教育机构是的目的是，你在我这学了，你出去就能直接上手工作，学校的目的是，给你打好基础，顺顺利利的毕业，多给你讲一些底层的原理，打好基础，以后学起来就比较方便，教育机构一般都是速成的，对底层原理讲的不是很透彻，这也仅仅是我看的一些文章的总结，主要还是看自己适合哪一个。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot; cla</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="http://example.com/2020/10/13/hello-world/"/>
+    <id>http://example.com/2020/10/13/hello-world/</id>
+    <published>2020-10-13T10:49:28.498Z</published>
+    <updated>2020-10-13T10:49:28.498Z</updated>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot; cla</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+</feed>
